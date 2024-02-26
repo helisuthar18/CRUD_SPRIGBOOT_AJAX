@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Users</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<button id="fetchUsersBtn">Fetch Users</button>
+
+<!-- Display the fetched users -->
+<ul id="userList"></ul>
+
+<script>
+    // jQuery function to execute when the button is clicked
+    $(document).ready(function () {
+        $("#fetchUsersBtn").click(function () {
+            // Ajax request to fetch users from the backend
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8286/index",
+                success: function (users) {
+                    // Handle the successful response here
+                    displayUsers(users);
+                },
+                error: function () {
+                    // Handle the error here
+                    alert("Error fetching users!");
+                }
+            });
+        });
+
+        // Function to display the fetched users
+        function displayUsers(users) {
+            // Clear the existing list
+            $("#userList").empty();
+
+            // Append each user to the list
+            $.each(users, function (index, user) {
+                $("#userList").append("<li>ID: " + user.id + ", Name: " + user.name + ", Email: " + user.email + "</li>");
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
